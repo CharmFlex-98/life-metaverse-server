@@ -1,5 +1,6 @@
 package com.charmflex.playground.life_metaverse.configuration
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.simp.config.MessageBrokerRegistry
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker
@@ -8,7 +9,9 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocketMessageBroker
-class WebSocketConfig : WebSocketMessageBrokerConfigurer {
+class WebSocketConfig(
+    @Value("\${websocket.allowed-origins}") private val allowedOrigins: String
+) : WebSocketMessageBrokerConfigurer {
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
         registry.enableSimpleBroker("/topic") // for broadcasting
         registry.setApplicationDestinationPrefixes("/app") // for client -> server
@@ -16,7 +19,7 @@ class WebSocketConfig : WebSocketMessageBrokerConfigurer {
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
         registry.addEndpoint("/ws-avatar")
-            .setAllowedOriginPatterns("*") // allow all for now
+            .setAllowedOriginPatterns(allowedOrigins) // allow all for now
 //            .withSockJS() // fallback for browsers
     }
 }

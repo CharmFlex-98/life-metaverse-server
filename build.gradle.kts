@@ -44,7 +44,7 @@ tasks.withType<Test> {
 tasks.named<BootBuildImage>("bootBuildImage") {
 	val dockerUsername = System.getenv("DOCKER_LOGIN_USERNAME")
 	val dockerPassword = System.getenv("DOCKER_LOGIN_PW")
-	imageName.set("charmflex/microservices-grocery-${project.name}")
+	imageName.set("charmflex/${project.name}-server")
 	publish.set(true)
 	docker {
 		publishRegistry {
