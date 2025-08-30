@@ -4,4 +4,4 @@ services:
     ports:
       - "3082:3000"
     environment:
-      - FE_DOMAIN: ${FE_DOMAIN}
+      - FE_DOMAIN=${FE_DOMAIN}
