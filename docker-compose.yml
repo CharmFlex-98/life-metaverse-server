@@ -4,6 +4,4 @@ services:
     ports:
       - "3082:3000"
     environment:
-      - DOCKER_LOGIN_USERNAME: ${DOCKER_LOGIN_USERNAME}
-      - DOCKER_LOGIN_PW: ${DOCKER_LOGIN_PW}
       - FE_DOMAIN: ${FE_DOMAIN}
