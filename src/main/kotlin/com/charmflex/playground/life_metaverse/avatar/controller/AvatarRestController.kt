@@ -3,13 +3,10 @@ package com.charmflex.playground.life_metaverse.avatar.controller
 import com.charmflex.playground.life_metaverse.avatar.Constant
 import com.charmflex.playground.life_metaverse.avatar.model.AvatarInfo
 import com.charmflex.playground.life_metaverse.avatar.service.AvatarService
-import com.charmflex.playground.life_metaverse.exception.LMErrors
-import jakarta.servlet.http.HttpServletResponse
+import com.charmflex.playground.life_metaverse.exception.LMException
 import org.springframework.http.HttpStatus
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.HttpStatusCodeException
 
 
 @RestController
@@ -27,8 +24,10 @@ class AvatarRestController(
         try {
             avatarService.add(avatarInfo)
             broadcaster.convertAndSend(Constant.BroadCast.TOPIC_CREATE_AVATAR, avatarInfo)
+        } catch (e: LMException) {
+            throw e
         } catch (e: Exception) {
-            throw LMErrors.InvalidAvatar
+            throw LMException.InvalidAvatar
         }
     }
 
@@ -37,9 +36,9 @@ class AvatarRestController(
     @ResponseStatus(HttpStatus.OK)
     fun getAll(): List<AvatarInfo> {
         try {
-            return avatarService.avatar
+            return avatarService.avatar.values.toList()
         } catch (e: Exception) {
-            throw LMErrors.InvalidAvatar
+            throw LMException.GenericException
         }
     }
 }
