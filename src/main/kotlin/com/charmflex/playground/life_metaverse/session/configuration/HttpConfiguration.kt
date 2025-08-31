@@ -1,11 +1,17 @@
-package com.charmflex.playground.life_metaverse.configuration
+package com.charmflex.playground.life_metaverse.session.configuration
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.server.ServerHttpRequest
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
+import org.springframework.web.socket.WebSocketHandler
+import org.springframework.web.socket.server.support.DefaultHandshakeHandler
+import java.security.Principal
+import java.util.*
+
 
 @Configuration
 class HttpConfiguration(
