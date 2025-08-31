@@ -13,7 +13,7 @@ import org.springframework.web.client.HttpStatusCodeException
 
 
 @RestController
-@RequestMapping("/api/avatars")
+@RequestMapping("/avatars")
 class AvatarRestController(
     private val broadcaster: SimpMessagingTemplate,
     private val avatarService: AvatarService
