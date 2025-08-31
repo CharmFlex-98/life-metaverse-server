@@ -10,7 +10,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 class WebSocketConfig(
-    @Value("\${websocket.allowed-origins}") private val allowedOrigins: String
+    @Value("\${web.allowed-origins}") private val allowedOrigins: String
 ) : WebSocketMessageBrokerConfigurer {
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
         registry.enableSimpleBroker("/topic") // for broadcasting
