@@ -18,7 +18,7 @@ class AvatarService {
     }
 
     private fun isDuplicated(avatarInfo: AvatarInfo): Boolean {
-        return _avatars.containsKey(avatarInfo.name).not()
+        return _avatars.containsKey(avatarInfo.name)
     }
 
     private fun isNotValid(avatarInfo: AvatarInfo): Boolean {
