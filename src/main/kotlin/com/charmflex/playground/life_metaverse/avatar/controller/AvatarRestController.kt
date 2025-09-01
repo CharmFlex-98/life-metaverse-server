@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("/avatars")
+@RequestMapping("/api/avatars")
 class AvatarRestController(
     private val broadcaster: SimpMessagingTemplate,
     private val avatarService: AvatarService

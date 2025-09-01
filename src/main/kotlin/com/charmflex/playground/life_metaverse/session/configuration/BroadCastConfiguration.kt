@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.server.ServerHttpRequest
 import org.springframework.messaging.simp.config.MessageBrokerRegistry
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler
 import org.springframework.web.socket.WebSocketHandler
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry
@@ -13,20 +14,25 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler
 import java.security.Principal
 import java.util.*
 
+
 @Configuration
 @EnableWebSocketMessageBroker
 class WebSocketConfig(
     @Value("\${web.allowed-origins}") private val allowedOrigins: String
 ) : WebSocketMessageBrokerConfigurer {
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
+        val te = ThreadPoolTaskScheduler()
+        te.poolSize = 1
+        te.setThreadNamePrefix("websocket-heartbeat-thread-")
+        te.initialize()
         registry
             .enableSimpleBroker("/topic")
-            .setHeartbeatValue(longArrayOf(10000, 10000))
+            .setTaskScheduler(te)
         registry.setApplicationDestinationPrefixes("/app") // for client -> server
     }
 
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-        registry.addEndpoint("/ws-avatar")
+        registry.addEndpoint("/api/ws-avatar")
             .setHandshakeHandler(handshakeHandler())
             .setAllowedOriginPatterns(allowedOrigins) // allow all for now
 //            .withSockJS() // fallback for browsers
