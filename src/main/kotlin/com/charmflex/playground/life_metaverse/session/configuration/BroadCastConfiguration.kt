@@ -19,7 +19,9 @@ class WebSocketConfig(
     @Value("\${web.allowed-origins}") private val allowedOrigins: String
 ) : WebSocketMessageBrokerConfigurer {
     override fun configureMessageBroker(registry: MessageBrokerRegistry) {
-        registry.enableSimpleBroker("/topic") // for broadcasting
+        registry
+            .enableSimpleBroker("/topic")
+            .setHeartbeatValue(longArrayOf(10000, 10000))
         registry.setApplicationDestinationPrefixes("/app") // for client -> server
     }
 
