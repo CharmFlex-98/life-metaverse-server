@@ -1,7 +1,6 @@
 package com.charmflex.playground.life_metaverse.session.handler
 
 import com.charmflex.playground.life_metaverse.avatar.Constant
-import java.util.*
 
 interface TopicListener {
     fun topic(): String

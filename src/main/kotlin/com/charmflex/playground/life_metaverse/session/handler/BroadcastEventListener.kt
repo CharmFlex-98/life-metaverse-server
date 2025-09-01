@@ -14,39 +14,39 @@ import java.util.*
 class BroadcastEventListener(
     private val topicListeners: List<TopicListener>
 ) {
-    @EventListener
-    fun onConnected(event: SessionConnectEvent) {
-        onListen(Constant.BroadCast.TOPIC_SESSION_METADATA)
-    }
-
-    @EventListener
-    fun onDisconnected(event: SessionDisconnectEvent) {
-        onListen(Constant.BroadCast.TOPIC_SESSION_METADATA)
-    }
-
-    @EventListener
-    fun onUnsubscribed(event: SessionUnsubscribeEvent) {
-        val destination = StompHeaderAccessor.wrap(event.message).destination
-        destination?.let { onListen(it) }
-    }
-
-    @EventListener
-    fun onSubscribed(event: SessionSubscribeEvent) {
-        val destination = StompHeaderAccessor.wrap(event.message).destination
-        destination?.let {
-            Timer().schedule(object : TimerTask() {
-                override fun run() {
-                    onListen(it)
-                }
-            }, 150)
-        }
-    }
-
-    private fun onListen(destination: String) {
-        topicListeners.forEach {
-            if (it.topic() == destination) {
-                it.onListen()
-            }
-        }
-    }
+//    @EventListener
+//    fun onConnected(event: SessionConnectEvent) {
+//        onListen(Constant.BroadCast.TOPIC_SESSION_METADATA)
+//    }
+//
+//    @EventListener
+//    fun onDisconnected(event: SessionDisconnectEvent) {
+//        onListen(Constant.BroadCast.TOPIC_SESSION_METADATA)
+//    }
+//
+//    @EventListener
+//    fun onUnsubscribed(event: SessionUnsubscribeEvent) {
+//        val destination = StompHeaderAccessor.wrap(event.message).destination
+//        destination?.let { onListen(it) }
+//    }
+//
+//    @EventListener
+//    fun onSubscribed(event: SessionSubscribeEvent) {
+//        val destination = StompHeaderAccessor.wrap(event.message).destination
+//        destination?.let {
+//            Timer().schedule(object : TimerTask() {
+//                override fun run() {
+//                    onListen(it)
+//                }
+//            }, 150)
+//        }
+//    }
+//
+//    private fun onListen(destination: String) {
+//        topicListeners.forEach {
+//            if (it.topic() == destination) {
+//                it.onListen()
+//            }
+//        }
+//    }
 }
